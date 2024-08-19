@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Budget</title>
+    </head>
+    <body>
+        <h1>Calculate</h1>
+        <form action="/calculate1" method="POST">
+            <label for="Q2">Q2:</label>
+            <input type="number" step="0.01" name="Q2" id="Q2" required><br><br>
+
+            <label for="Qkred">Qkred:</label>
+            <input type="number" step="0.01" name="Qkred" id="Qkred" required><br><br>
+
+            <label for="QIAS2">QIAS2:</label>
+            <input type="number" step="0.01" name="QIAS2" id="QIAS2" required><br><br>
+
+            <label for="Qn2">Qn2:</label>
+            <input type="number" step="0.01" name="Qn2" id="Qn2" required><br><br>
+
+            <label for="QDPP2">QDPP2:</label>
+            <input type="number" step="0.01" name="QDPP2" id="QDPP2" required><br><br>
+
+            <label for="Qkom">Qkom:</label>
+            <input type="number" step="0.01" name="Qkom" id="Qkom" required><br><br>
+
+            <input type="submit" value="Calculate">
+        </form>
+        {% if QMZ is not none %}
+            <h2>Calculated QMZ: {{ QMZ }}</h2>
+        {% endif %}
+    </body>
+</html>
