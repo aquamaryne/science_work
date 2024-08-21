@@ -18,15 +18,7 @@ def calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom):
     QMZ = Q2 - Qkred - Qias2 - Qn2 - Qdpp2 - Qkom
     return QMZ
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/page2')
-def page2():
-    return render_template('index1.html')
-
-@app.route('/calculate', methods=['POST'])
+@app.route('/api/calculate_qoz', methods=['POST'])
 def calculate_qoz_view():
     data = request.form
     Q1 = number_convert(data.get('Q1'))
@@ -40,9 +32,9 @@ def calculate_qoz_view():
     Qdpp = number_convert(data.get('QDPP'))
 
     Qoz = calculate_qoz(Q1, Qt, Qmizh, Qias, Qlits, Qn, Qvp, Qupr, Qdpp)
-    return render_template('index.html', Qoz=Qoz)
+    return Qoz
 
-@app.route('/calculate1', methods=['POST'])
+@app.route('/api/calculate_qmz', methods=['POST'])
 def calculate_qmz_view():
     data = request.form
     Q2 = number_convert(data.get('Q2'))
@@ -53,8 +45,7 @@ def calculate_qmz_view():
     Qkom = number_convert(data.get('Qkom'))
 
     QMZ = calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom)
-    return render_template('index1.html', QMZ=QMZ)
-
+    return QMZ
 
 if __name__ == '__main__':
     app.run(debug=True)
