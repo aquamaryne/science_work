@@ -1,12 +1,12 @@
 version: '3.6'
 
 services:
-  front:
+  react:
     build: 
       context: .
       dockerfile: react/dockerfile
     ports:
-      - "3003:3003"
+      - "3002:3002"
     volumes:
       - ./react:/usr/react/
     restart: 'always'
