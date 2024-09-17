@@ -1,8 +1,8 @@
 FROM node:21-alpine
-WORKDIR /front
-COPY front/package*.json ./
+WORKDIR /react
+COPY react/package*.json ./
 RUN npm install
-COPY front/ .
+COPY react/ .
 RUN npm run build
 EXPOSE 3000
 CMD [ "npm", "start" ]

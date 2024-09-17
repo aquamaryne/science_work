@@ -1,0 +1,21 @@
+version: '3.6'
+
+services:
+  front:
+    build: 
+      context: .
+      dockerfile: react/dockerfile
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./react:/usr/react/
+    restart: 'always'
+
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+    volumes:
+      - .:/flask
