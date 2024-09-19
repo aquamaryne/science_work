@@ -3,12 +3,12 @@ version: '3.7'
 services:
   reactapp:
     build: 
-      context: ./react
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: react/Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./react:/app
+      - ./react:/usr/app
     stdin_open: true
     tty: true
     restart: 'always'
