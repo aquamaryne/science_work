@@ -3,8 +3,8 @@ version: '3.7'
 services:
   reactapp:
     build: 
-      context: .
-      dockerfile: react/Dockerfile
+      context: ./react
+      dockerfile: dockerfile
     ports:
       - "3000:3000"
     volumes:
@@ -13,7 +13,7 @@ services:
 
   flask:
     build:
-      context: .
+      context: ./flask
       dockerfile: dockerfile 
     volumes:
       - .:/app
