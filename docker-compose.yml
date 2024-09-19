@@ -1,21 +1,26 @@
-version: '3.6'
+version: '3.7'
 
 services:
-  react:
+  frontend:
     build: 
-      context: .
-      dockerfile: react/dockerfile
+      context: ./react
+      dockerfile: dockerfile
     ports:
-      - "3002:3002"
+      - "3000:3000"
     volumes:
-      - ./react:/usr/react/
+      - ./react:/app
+    stdin_open: true
+    tty: true
     restart: 'always'
 
   flask:
     build:
       context: .
-      dockerfile: Dockerfile 
+      dockerfile: dockerfile 
+    volumes:
+      - .:/app
+    command: py main.py
     ports:
       - "5000:5000"
     depends_on:
-      - react
+      - frontend
