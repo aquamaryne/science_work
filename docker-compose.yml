@@ -19,7 +19,7 @@ services:
       dockerfile: dockerfile 
     volumes:
       - .:/app
-    command: py main.py
+    command: python main.py
     ports:
       - "5000:5000"
     depends_on:
