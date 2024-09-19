@@ -1,23 +1,8 @@
-# Use official Node.js image (alpine version for a smaller footprint)
 FROM node:21-alpine
-
-# Set the working directory inside the container
-WORKDIR /front
-
-# Copy package.json and package-lock.json from the front directory into the container
-COPY front/package*.json ./
-
-# Install dependencies
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
-
-# Copy the rest of the application code to the container
-COPY front/ ./
-
-# Build the production-ready React app
+COPY . ./
 RUN npm run build
-
-# Expose the necessary port (usually 3000 for React apps)
 EXPOSE 3000
-
-# Start the application
 CMD [ "npm", "start" ]
