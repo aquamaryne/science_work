@@ -1,14 +1,14 @@
 version: '3.7'
 
 services:
-  front:
+  reactapp:
     build: 
-      context: ./front
+      context: ./react
       dockerfile: dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./front:/app
+      - ./react:/app
     stdin_open: true
     tty: true
     restart: 'always'
@@ -23,4 +23,4 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - front
+      - reactapp
