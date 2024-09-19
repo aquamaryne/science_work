@@ -9,8 +9,6 @@ services:
       - "3000:3000"
     volumes:
       - ./react:/app
-    stdin_open: true
-    tty: true
     restart: 'always'
 
   flask:
