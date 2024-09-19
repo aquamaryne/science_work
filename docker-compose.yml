@@ -8,7 +8,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./react:/usr/app
+      - ./react:/app
     stdin_open: true
     tty: true
     restart: 'always'
