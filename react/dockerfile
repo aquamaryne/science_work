@@ -2,7 +2,8 @@ FROM node:21
 WORKDIR /react
 COPY package*.json ./
 RUN npm install
+ENV PORT=4000
 COPY . .
 RUN npm run build
-EXPOSE 8000
+EXPOSE 4000
 CMD [ "npm", "start" ]
