@@ -1,48 +1,25 @@
-import React from 'react';
-import { QozFormData } from './interface/qoz';
-import Qoz from './components/qozForm';
-import { QmzFormData } from './interface/qmz';
-import Qmz from './components/qmzForm';
+import { Button, Typography } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import PageThree from './components/pageone';
+import MainPage from './components/mainpage';
 
 function App() {
-  const [qozResult, setQozResult] = React.useState<number | null>(null);
-  const [qmzResult, setQmzResult] = React.useState<number | null>(null);
-
-  const handleQozSubmit = async(formData: QozFormData) => {
-    const responce = await fetch('http://127.0.0.1:5000/api/calculate_qoz', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await responce.json();
-    setQozResult(data.Qoz)
-  }
-
-  const handleQmzSubmit = async(formData: QmzFormData) => {
-    const responce = await fetch('http://127.0.0.1:5000/api/calculate_qmz', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await responce.json();
-    setQozResult(data.QMZ)
-  }
-
   return (
     <div>
-      <h1>Calculate QOZ</h1>
-      <Qoz onSubmit={handleQozSubmit} />
-      { qozResult !== null && <p>Result: {qozResult}</p>}
+      <Router>
+        <Routes>
+          <Route path='mainpage' element={ <MainPage /> } />
+          <Route path='pageone' element={ <PageThree />} />
+        </Routes>
+      </Router>
 
-      <h1>Calculate QMZ</h1>
-      <Qmz onSubmit={handleQmzSubmit} />
-      { qmzResult !== null && <p>Result: {qmzResult}</p>}
+      <Link to={"/PageTree"}
+      > 
+        <Button>
+          <Typography>Table 3.3</Typography>
+        </Button>
+      </Link>
+      
     </div>
   );
 }

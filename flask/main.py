@@ -1,9 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
+import csv
 
 app = Flask(__name__)
 CORS(app)
 
+def read_csv_file():
+    csv_data = []
+    with open('Book1.csv', newline='', encoding='windows-1251') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            csv_data.append(row)
+        return csv_data
+    
 def number_convert(value):
     if value is None or value == '':
         return 0
@@ -48,6 +57,11 @@ def calculate_qmz_view():
 
     QMZ = calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom)
     return QMZ
+
+@app.route('/road_levels', methods=['GET'])
+def get_road_levels():
+    data = read_csv_file()
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)

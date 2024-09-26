@@ -1,5 +1,6 @@
 import React, { FormEvent } from "react";
 import { QozFormData, QozFormProps } from "../interface/qoz";
+import { TextField, Button, Box, Typography } from "@mui/material";
 
 const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
     const[formData, setFormData] = React.useState<QozFormData>({
@@ -27,18 +28,130 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
     };
 
     return(
-        <form onSubmit={handleSubmit}>
-            <input name="Q1" value={formData.Q1} onChange={handleChange} />
-            <input name="Qt" value={formData.Qt} onChange={handleChange} />
-            <input name="Qmizh" value={formData.Qmizh} onChange={handleChange} />
-            <input name="QIAS" value={formData.Qias} onChange={handleChange} />
-            <input name="Qlits" value={formData.Qlits} onChange={handleChange} />
-            <input name="Qn" value={formData.Qn} onChange={handleChange} />
-            <input name="Qvp" value={formData.Qvp} onChange={handleChange} />
-            <input name="Qup" value={formData.Qup} onChange={handleChange} />
-            <input name="QDPP" value={formData.Qdpp} onChange={handleChange} />
-            <button type="submit">Calculate</button>
-        </form>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                maxWidth: 400,
+                margin: "0 auto",
+                padding: 2,
+                backgroundColor: "#f5f5f5",
+                borderRadius: 2,
+                boxShadow: 3,
+            }}
+        >
+            <Typography variant="h5" align="center" gutterBottom>
+                Qmz Form
+            </Typography>
+        
+            <Box
+                sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                    gap: 2,
+                    maxWidth: "100%",
+                }}
+            >
+                <TextField
+                    label="Q1"
+                    name="Q1"
+                    type="number"
+                    value={formData.Q1}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="Qt"
+                    name="Qt"
+                    type="number"
+                    value={formData.Qt}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="Qmizh"
+                    name="Qmizh"
+                    type="number"
+                    value={formData.Qmizh}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="QIAS"
+                    name="Qias"
+                    type="number"
+                    value={formData.Qias}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="Qlits"
+                    name="Qlits"
+                    type="number"
+                    value={formData.Qlits}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="Qn"
+                    name="Qn"
+                    type="number"
+                    value={formData.Qn}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="Qvp"
+                    name="Qvp"
+                    type="number"
+                    value={formData.Qvp}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="Qup"
+                    name="Qup"
+                    type="number"
+                    value={formData.Qup}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                <TextField
+                    label="QDPP"
+                    name="Qdpp"
+                    type="number"
+                    value={formData.Qdpp}
+                    onChange={handleChange}
+                    fullWidth
+                    variant="outlined"
+                    sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
+                />
+                </Box>
+
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+                Calculate
+            </Button>
+        </Box>
     )
 }
 
