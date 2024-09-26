@@ -8,18 +8,14 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path='mainpage' element={ <MainPage /> } />
-          <Route path='pageone' element={ <PageThree />} />
+          <Route path='/mainpage' element={ <MainPage /> } />
+          <Route path='/pageone' element={ <PageThree />} />
         </Routes>
+        <Button component={Link} to='/pageone'>
+            <Typography>Table 3.3</Typography>
+        </Button> 
       </Router>
 
-      <Link to={"/PageTree"}
-      > 
-        <Button>
-          <Typography>Table 3.3</Typography>
-        </Button>
-      </Link>
-      
     </div>
   );
 }

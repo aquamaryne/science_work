@@ -3,7 +3,7 @@ version: '3.7'
 services:
   reactapp:
     build: 
-      context: ./react
+      context: ./react-app
       dockerfile: dockerfile
     ports:
       - "4000:4000"
@@ -21,4 +21,4 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - reactapp
+      - react-app

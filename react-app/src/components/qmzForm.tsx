@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import { QmzFormData, QmzFormProps } from "../interface/qmz";
+import { QmzFormProps, QmzFormData } from "../interface/qmz";
 import { TextField, Button, Box, Typography } from "@mui/material";
 
 const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
