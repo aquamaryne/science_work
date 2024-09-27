@@ -31,7 +31,7 @@ const MainPage: React.FC = () => {
         });
 
         const data = await responce.json();
-        setQmzResult(data.QMZ)
+        setQmzResult(data.Qmz)
     }
 
     return (

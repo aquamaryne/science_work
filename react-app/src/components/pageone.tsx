@@ -54,7 +54,7 @@ const PageThree: React.FC = () => {
                     <Typography variant="h5">Пояснення</Typography>
                     <Typography>{description}</Typography>
                     <Typography>
-                        Інтенсивність: { selectedLevel['Інтенсивність руху в транспортних одиницях, авт./добу']}
+                        Інтенсивність: { selectedLevel['Інтенсивність руху в транспортних одиницях, авт./добу'] || 'Немає даних про інтенсивність' }
                     </Typography>
                 </Box>
             )}

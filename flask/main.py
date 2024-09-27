@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import csv
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -9,11 +10,20 @@ def read_csv_file():
     csv_data = []
     try:
         with open('Book1.csv', newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile)
+            reader = csv.DictReader(csvfile, delimiter=';', quotechar='"')
             for row in reader:
-                csv_data.append(row)
+                if row['Рівень вимог']:  # Игнорируем строки без значения
+                    csv_data.append({
+                        'Рівень вимог': row['Рівень вимог'].strip(),
+                        'Значення автомобільної дороги загального користування': row['Значення автомобільної дороги загального користування'].strip(),
+                        'Інтенсивність руху в транспортних одиницях, авт./добу': row['Інтенсивність руху в транспортних одиницях, авт./добу'].strip(),
+                        'Опис рівня': row.get('Опис рівня', '').strip() or 'Немає опису'
+                    })
     except FileNotFoundError:
         return {"error": "CSV file not found"}, 404
+    except Exception as e:
+        return {"error": f"Error reading CSV file: {str(e)}"}, 500
+    
     return csv_data
     
     
@@ -30,8 +40,8 @@ def calculate_qoz(Q1, Qt, Qmizh, Qias, Qlits, Qn, Qvp, Qupr, Qdpp):
     return Qoz
 
 def calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom):
-    QMZ = Q2 - Qkred - Qias2 - Qn2 - Qdpp2 - Qkom
-    return QMZ
+    Qmz = Q2 - Qkred - Qias2 - Qn2 - Qdpp2 - Qkom
+    return Qmz
 
 @app.route('/calculate_qoz', methods=['POST'])
 def calculate_qoz_view():
@@ -59,12 +69,13 @@ def calculate_qmz_view():
     Qdpp2 = number_convert(data.get('Qdpp2'))
     Qkom = number_convert(data.get('Qkom'))
 
-    QMZ = calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom)
-    return jsonify({"Omz": QMZ})
+    Qmz = calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom)
+    return jsonify({"Qmz": Qmz})
 
 @app.route('/road_levels', methods=['GET'])
 def get_road_levels():
     data = read_csv_file()
+    print(data)
     return jsonify(data)
 
 if __name__ == '__main__':
