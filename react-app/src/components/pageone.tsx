@@ -5,6 +5,7 @@ interface RoadLevel {
     'Рівень вимог': string,
     'Значення автомобільної дороги загального користування': string;
     'Інтенсивність руху в транспортних одиницях, авт./добу': string;
+    'Опис рівня'?: string;
 }
 
 const PageThree: React.FC = () => {
@@ -23,6 +24,7 @@ const PageThree: React.FC = () => {
         const value = event.target.value;
         const level = levels.find((lvl) => lvl['Рівень вимог'] === value);
         setSelectedLevel(level || null);
+        setDesription(level ? level['Опис рівня'] || 'Немає опису для цього рівня' : '');
     }
 
     return (

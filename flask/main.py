@@ -7,11 +7,15 @@ CORS(app)
 
 def read_csv_file():
     csv_data = []
-    with open('Book1.csv', newline='', encoding='windows-1251') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            csv_data.append(row)
-        return csv_data
+    try:
+        with open('Book1.csv', newline='', encoding='utf-8') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                csv_data.append(row)
+    except FileNotFoundError:
+        return {"error": "CSV file not found"}, 404
+    return csv_data
+    
     
 def number_convert(value):
     if value is None or value == '':
@@ -29,9 +33,9 @@ def calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom):
     QMZ = Q2 - Qkred - Qias2 - Qn2 - Qdpp2 - Qkom
     return QMZ
 
-@app.route('/api/calculate_qoz', methods=['POST'])
+@app.route('/calculate_qoz', methods=['POST'])
 def calculate_qoz_view():
-    data = request.form
+    data = request.json
     Q1 = number_convert(data.get('Q1'))
     Qt = number_convert(data.get('Qt'))
     Qmizh = number_convert(data.get('Qmizh'))
@@ -43,11 +47,11 @@ def calculate_qoz_view():
     Qdpp = number_convert(data.get('QDPP'))
 
     Qoz = calculate_qoz(Q1, Qt, Qmizh, Qias, Qlits, Qn, Qvp, Qupr, Qdpp)
-    return Qoz
+    return jsonify({"Qoz": Qoz})
 
-@app.route('/api/calculate_qmz', methods=['POST'])
+@app.route('/calculate_qmz', methods=['POST'])
 def calculate_qmz_view():
-    data = request.form
+    data = request.json
     Q2 = number_convert(data.get('Q2'))
     Qkred = number_convert(data.get('Qkred'))
     Qias2 = number_convert(data.get('Qias2'))
@@ -56,7 +60,7 @@ def calculate_qmz_view():
     Qkom = number_convert(data.get('Qkom'))
 
     QMZ = calculate_qmz(Q2, Qkred, Qias2, Qn2, Qdpp2, Qkom)
-    return QMZ
+    return jsonify({"Omz": QMZ})
 
 @app.route('/road_levels', methods=['GET'])
 def get_road_levels():

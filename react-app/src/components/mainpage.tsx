@@ -9,7 +9,7 @@ const MainPage: React.FC = () => {
     const [qmzResult, setQmzResult] = React.useState<number | null>(null);
 
     const handleQozSubmit = async(formData: QozFormData) => {
-        const responce = await fetch('http://127.0.0.1:5000/api/calculate_qoz', {
+        const responce = await fetch('http://127.0.0.1:5000/calculate_qoz', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const MainPage: React.FC = () => {
     }
 
     const handleQmzSubmit = async(formData: QmzFormData) => {
-        const responce = await fetch('http://127.0.0.1:5000/api/calculate_qmz', {
+        const responce = await fetch('http://127.0.0.1:5000/calculate_qmz', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
