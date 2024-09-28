@@ -1,30 +1,43 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import csv
-import pandas as pd
+import openpyxl
+
 
 app = Flask(__name__)
 CORS(app)
 
-def read_csv_file():
-    csv_data = []
+def read_excel_file():
+    excel_data = []  # Ініціалізуємо список для зберігання даних з Excel
     try:
-        with open('Book1.csv', newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=';', quotechar='"')
-            for row in reader:
-                if row['Рівень вимог']:  # Игнорируем строки без значения
-                    csv_data.append({
-                        'Рівень вимог': row['Рівень вимог'].strip(),
-                        'Значення автомобільної дороги загального користування': row['Значення автомобільної дороги загального користування'].strip(),
-                        'Інтенсивність руху в транспортних одиницях, авт./добу': row['Інтенсивність руху в транспортних одиницях, авт./добу'].strip(),
-                        'Опис рівня': row.get('Опис рівня', '').strip() or 'Немає опису'
-                    })
+        file_path = 'Book1.xlsx'  # Вказуємо шлях до файлу Excel
+        workbook = openpyxl.load_workbook(file_path)  # Відкриваємо файл Excel
+        sheet = workbook.active  # Отримуємо активний лист
+
+        # Проходимо по рядках, починаючи з другого (щоб пропустити заголовок)
+        for row in sheet.iter_rows(min_row=2, values_only=True):  
+            if row[0]:  # Перевіряємо, чи є значення в колонці "Рівень вимог"
+                
+                # Отримуємо значення з колонок і очищаємо їх від пробілів
+                level_requirements = str(row[0]).strip()  
+                road_value = str(row[1]).strip() if len(row) > 1 else ''  # Перевіряємо, чи існує друга колонка
+                traffic_intensity = str(row[2]).strip() if len(row) > 2 else ''  # Перевіряємо, чи існує третя колонка
+                level_description = str(row[3]).strip() if len(row) > 3 and row[3] else 'Немає опису'  # Перевіряємо, чи існує четверта колонка
+
+                # Додаємо об'єкт до списку з отриманими даними
+                excel_data.append({
+                    'Рівень вимог': level_requirements,
+                    'Значення автомобільної дороги загального користування': road_value,
+                    'Інтенсивність руху в транспортних одиницях, авт./добу': traffic_intensity,
+                    'Опис рівня': level_description
+                })
+                
     except FileNotFoundError:
-        return {"error": "CSV file not found"}, 404
+        return {"error": "Excel file not found"}, 404  # Обробка помилки, якщо файл не знайдено
     except Exception as e:
-        return {"error": f"Error reading CSV file: {str(e)}"}, 500
+        return {"error": f"Error reading Excel file: {str(e)}"}, 500  # Загальна обробка помилок
     
-    return csv_data
+    return excel_data  # Повертаємо отримані дані
+
     
     
 def number_convert(value):
@@ -74,7 +87,7 @@ def calculate_qmz_view():
 
 @app.route('/road_levels', methods=['GET'])
 def get_road_levels():
-    data = read_csv_file()
+    data = read_excel_file()
     print(data)
     return jsonify(data)
 

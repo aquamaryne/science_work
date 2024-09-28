@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Typography, FormControl, Select, MenuItem, Box, SelectChangeEvent } from '@mui/material';
+import axios from "axios";
+import { Typography, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 
 interface RoadLevel {
     'Рівень вимог': string,
@@ -9,57 +10,54 @@ interface RoadLevel {
 }
 
 const PageThree: React.FC = () => {
-    const [levels, setLevels] = React.useState<RoadLevel[]>([]);
-    const [selectedLevel, setSelectedLevel] = React.useState<RoadLevel | null>(null);
-    const [description, setDesription] = React.useState<string>('');
+    const [data, setData] = React.useState<RoadLevel[]>([]);
+    const [selectedLevel, setSelectedLevel] = React.useState<string>('');
+    const [description, setDescription] = React.useState<string>('');
 
     React.useEffect(() => {
-        fetch('/road_levels')
-            .then((responce) => responce.json())
-            .then((data: RoadLevel[]) => setLevels(data))
-            .catch((error) => console.error('Error while uploading data', error));
+        axios.get<RoadLevel[]>('http://127.0.0.1:5000/road_levels')
+        .then((responce) => {
+            setData(responce.data);
+        })
+        .catch((error) => {
+            console.error('Error fetching data: ', error);
+        });
     }, []);
 
     const handleSelectChange = (event: SelectChangeEvent<string>) => {
-        const value = event.target.value;
-        const level = levels.find((lvl) => lvl['Рівень вимог'] === value);
-        setSelectedLevel(level || null);
-        setDesription(level ? level['Опис рівня'] || 'Немає опису для цього рівня' : '');
-    }
+        const selected = event.target.value as string | undefined;
+        if(typeof selected === 'string'){
+            setSelectedLevel(selected);
+
+            const selectedData = data.find(item => item['Рівень вимог'] === selected);
+            if(selectedData){
+                setDescription(selectedData['Опис рівня'] || '');
+            } else {
+                setDescription('');
+            }
+        }
+
+    };
 
     return (
-        <Box p={2}>
-            <Typography variant="h4" gutterBottom>
-                Оберіть рівень доріг
-            </Typography>
-            <FormControl fullWidth variant='outlined'>
-                <Select
-                    value={selectedLevel ? selectedLevel['Рівень вимог'] : ''}
-                    onChange={handleSelectChange}
-                    displayEmpty
-                >
-                    <MenuItem value="">
-                        <em> -- Рівень доріг -- </em>
+        <div>
+            <Select value={selectedLevel} onChange={handleSelectChange} displayEmpty>
+                <MenuItem value="">
+                    <em> -- Виберіть Рівень -- </em>
+                </MenuItem>
+                {data.map ((item) => (
+                    <MenuItem key={item['Рівень вимог']} value={item['Рівень вимог']}>
+                        {item['Рівень вимог']}
                     </MenuItem>
-                    {levels.map((level, index) => (
-                        <MenuItem key={index} value={level['Рівень вимог']}>
-                            Рівень {level['Рівень вимог']}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                ))}
+            </Select>
 
-            {selectedLevel && (
-                <Box mt={2}>
-                    <Typography variant="h5">Пояснення</Typography>
-                    <Typography>{description}</Typography>
-                    <Typography>
-                        Інтенсивність: { selectedLevel['Інтенсивність руху в транспортних одиницях, авт./добу'] || 'Немає даних про інтенсивність' }
-                    </Typography>
-                </Box>
+            {description && (
+                <Typography variant="body1" style={{ marginTop: '10px' }}>
+                    {description}
+                </Typography>
             )}
-        </Box>    
-    );
+        </div>
+    )
 }
-
 export default PageThree;

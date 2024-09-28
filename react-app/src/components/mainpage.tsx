@@ -3,6 +3,7 @@ import { QmzFormData } from '../interface/qmz';
 import { QozFormData } from '../interface/qoz';
 import Qoz from './qozForm';
 import Qmz from './qmzForm';
+import { Container, Typography, Paper } from '@mui/material';
 
 const MainPage: React.FC = () => {
     const [qozResult, setQozResult] = React.useState<number | null>(null);
@@ -35,16 +36,36 @@ const MainPage: React.FC = () => {
     }
 
     return (
-        <div>
-            <h1>Calculate QOZ</h1>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
+            <Typography variant="h4" gutterBottom>
+                Calculate QOZ
+            </Typography>
             <Qoz onSubmit={handleQozSubmit} />
-            { qozResult !== null && <p>Result: {qozResult}</p>}
-    
-            <h1>Calculate QMZ</h1>
+
+            {qozResult !== null && (
+                <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
+                    <Typography variant="h6" color="primary">
+                        QOZ Result:
+                    </Typography>
+                    <Typography variant="body1">{qozResult}</Typography>
+                </Paper>
+            )}
+
+            <Typography variant="h4" gutterBottom sx={{ mt: 4 }}>
+                Calculate QMZ
+            </Typography>
             <Qmz onSubmit={handleQmzSubmit} />
-            { qmzResult !== null && <p>Result: {qmzResult}</p>}
-        </div>
-    )
+
+            {qmzResult !== null && (
+                <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
+                    <Typography variant="h6" color="secondary">
+                        QMZ Result:
+                    </Typography>
+                    <Typography variant="body1">{qmzResult}</Typography>
+                </Paper>
+            )}
+        </Container>
+    );
 }
 
 export default MainPage;
