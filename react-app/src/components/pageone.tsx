@@ -13,6 +13,7 @@ const PageThree: React.FC = () => {
     const [data, setData] = React.useState<RoadLevel[]>([]);
     const [selectedLevel, setSelectedLevel] = React.useState<string>('');
     const [description, setDescription] = React.useState<string>('');
+    const [roadValue, setRoadValue] = React.useState<string>('');
 
     React.useEffect(() => {
         axios.get<RoadLevel[]>('http://127.0.0.1:5000/road_levels')
@@ -29,9 +30,10 @@ const PageThree: React.FC = () => {
         if(typeof selected === 'string'){
             setSelectedLevel(selected);
 
-            const selectedData = data.find(item => item['Рівень вимог'] === selected);
+            const selectedData = data.find(item => item['Інтенсивність руху в транспортних одиницях, авт./добу'] === selected);
             if(selectedData){
                 setDescription(selectedData['Опис рівня'] || '');
+                setRoadValue(selectedData['Значення автомобільної дороги загального користування'] || '');
             } else {
                 setDescription('');
             }
@@ -43,18 +45,17 @@ const PageThree: React.FC = () => {
         <div>
             <Select value={selectedLevel} onChange={handleSelectChange} displayEmpty>
                 <MenuItem value="">
-                    <em> -- Виберіть Рівень -- </em>
+                    <em> -- Виберіть інтенсивність руху -- </em>
                 </MenuItem>
                 {data.map ((item) => (
-                    <MenuItem key={item['Рівень вимог']} value={item['Рівень вимог']}>
-                        {item['Рівень вимог']}
+                    <MenuItem key={item['Інтенсивність руху в транспортних одиницях, авт./добу']} value={item['Інтенсивність руху в транспортних одиницях, авт./добу']}>
+                        {item['Інтенсивність руху в транспортних одиницях, авт./добу']}
                     </MenuItem>
                 ))}
             </Select>
-
-            {description && (
+            {roadValue && (
                 <Typography variant="body1" style={{ marginTop: '10px' }}>
-                    {description}
+                    {roadValue}
                 </Typography>
             )}
         </div>
