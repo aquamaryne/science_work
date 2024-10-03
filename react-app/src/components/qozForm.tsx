@@ -15,10 +15,13 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
         Qdpp: 0,
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
         setFormData({
             ...formData,
             [e.target.name]: parseFloat(e.target.value),
+            [name]: parseFloat(value.replace(',', '.')) || 0,
         });
     };
 
@@ -35,7 +38,7 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                maxWidth: 400,
+                maxWidth: "100%",
                 margin: "0 auto",
                 padding: 2,
                 backgroundColor: "#f5f5f5",
@@ -51,9 +54,9 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                 sx={{
                     display: "flex",
                     flexWrap: "wrap",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
                     gap: 2,
-                    maxWidth: "100%",
+                    width: "100%",
                 }}
             >
                 <TextField
@@ -63,7 +66,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Q1}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -73,7 +77,7 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qt}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -83,7 +87,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qmizh}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -93,7 +98,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qias}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -103,7 +109,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qlits}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -113,7 +120,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qn}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -123,7 +131,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qvp}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -133,7 +142,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qup}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -143,7 +153,8 @@ const Qoz: React.FC<QozFormProps> = ({ onSubmit }) => {
                     value={formData.Qdpp}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
+                    inputMode="decimal"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 </Box>

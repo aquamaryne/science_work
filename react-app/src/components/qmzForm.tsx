@@ -32,7 +32,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                maxWidth: 400,
+                maxWidth: "100%",
                 margin: "0 auto",
                 padding: 2,
                 backgroundColor: "#f5f5f5",
@@ -61,7 +61,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                     value={formData.Q2}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -71,7 +71,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                     value={formData.Qkred}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -81,7 +81,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                     value={formData.Qias2}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -91,7 +91,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                     value={formData.Qn2}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -101,7 +101,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                     value={formData.Qdpp2}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
                 <TextField
@@ -111,7 +111,7 @@ const Qmz: React.FC<QmzFormProps> = ({ onSubmit }) => {
                     value={formData.Qkom}
                     onChange={handleChange}
                     fullWidth
-                    variant="outlined"
+                    variant="standard"
                     sx={{ flexBasis: 'calc(25% - 16px)', minWidth: 120 }}
                 />
             </Box>
