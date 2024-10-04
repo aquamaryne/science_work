@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './components/mainpage';
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <div>
       <Router>
         <Routes>
-          <Route path='/mainpage' element={ <MainPage /> } />
+          <Route path='/' element={ <MainPage /> } />
         </Routes>
       </Router>
 
