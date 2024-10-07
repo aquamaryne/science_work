@@ -31,8 +31,10 @@ def compute_Q(LD_j, HD_j, KD_1, K2_i, K3_i):
     return np.sum(LD_j * HD_j * KD_1 * K2_i * K3_i)
 
 def compute_KD4():
-    summary = sum(K4_i * LDC_k) + (LD_j * LDC_k) / LDC_k
-    return summary
+    summary_one = np.sum(K4_i * LD_j[:len(K4_i)])
+    summary_two = LDC_k * np.sum(LD_j)
+    K_D4i = (summary_one + summary_two) / LDC_k
+    return K_D4i
 
 HM_j_values = compute_HM_j(HMZ, KM_j, KI)
 HD_j_values = compute_HD_j(HDZ, KD_j, KI)
