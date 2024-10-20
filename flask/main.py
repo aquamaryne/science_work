@@ -1,49 +1,90 @@
-# from flask import Flask, request, jsonify
-# from flask_cors import CORS
-import numpy as np
+from flask import Flask, request, jsonify
 
-# app = Flask(__name__)
-# CORS(app)
+app = Flask(__name__)
 
-HMZ = 200
-HDZ = 100
-KI = 1
-KD_1 = 1.16
+# Коэффициенты для категорий дорог
+state_category_coefficients = {
+    'I': 1.80,
+    'II': 1.00,
+    'III': 0.89,
+    'IV': 0.61,
+    'V': 0.39
+}
 
-K2_i = np.array([1.15, 1.13, 1.11, 1.04, 1.00])
-K3_i = np.array([1.15, 1.13, 1.11, 1.04, 1.00])
-K5_i = np.array([1.01, 1.03, 1.05])
-K4_i = np.array([2.3, 3.5, 3.9])
+local_category_coefficients = {
+    'I': 1.71,
+    'II': 1.00,
+    'III': 0.85,
+    'IV': 0.64,
+    'V': 0.40
+}
 
-KM_j = np.array([1.71, 1.00, 0.85, 0.64, 0.40])
-KD_j = np.array([1.80, 1.00, 0.89, 0.61, 0.31])
+# Функции для расчета затрат
+def calculate_total_cost_state(data):
+    """
+    Рассчитывает общий объем средств на содержание дорог государственного значения (формула 3.5)
+    """
+    base_cost_II = data['base_cost_II']
+    inflation_index = data['inflation_index']
+    category = data['category']
+    length_km = data['length_km']
+    
+    coefficients = state_category_coefficients
 
-LD_j = np.array([10, 20, 15, 12, 8])
-LDC_k = 150
+    category_coefficient = coefficients.get(category, 1.0)
+    normative_per_km = base_cost_II * category_coefficient * inflation_index
 
-def compute_HM_j(HMZ, KM_j, KI):
-    return HMZ * KM_j * KI
+    total_cost = (normative_per_km * length_km *
+                  data['general_correction'] *
+                  data['mountain_coefficient'] *
+                  data['exploitation_coefficient'] *
+                  data['traffic_intensity_coefficient'] *
+                  data['bridge_coefficient'] *
+                  data['lighting_coefficient'] *
+                  data['recent_repair_coefficient'])
+    return total_cost
 
-def compute_HD_j(HDZ, KD_j, KI):
-    return HDZ * KD_j * KI
 
-def compute_Q(LD_j, HD_j, KD_1, K2_i, K3_i):
-    return np.sum(LD_j * HD_j * KD_1 * K2_i * K3_i)
+def calculate_total_cost_local(data):
+    """
+    Рассчитывает общий объем средств на содержание дорог местного значения (формула 3.6)
+    """
+    base_cost_II = data['base_cost_II']
+    inflation_index = data['inflation_index']
+    category = data['category']
+    length_km = data['length_km']
+    
+    coefficients = local_category_coefficients
 
-def compute_KD4():
-    summary_one = np.sum(K4_i * LD_j[:len(K4_i)])
-    summary_two = LDC_k * np.sum(LD_j)
-    K_D4i = (summary_one + summary_two) / LDC_k
-    return K_D4i
+    category_coefficient = coefficients.get(category, 1.0)
+    normative_per_km = base_cost_II * category_coefficient * inflation_index
 
-HM_j_values = compute_HM_j(HMZ, KM_j, KI)
-HD_j_values = compute_HD_j(HDZ, KD_j, KI)
-Q = compute_Q(LD_j, HD_j_values, KD_1, K2_i, K3_i)
-KD4 = compute_KD4()
+    total_cost = (normative_per_km * length_km *
+                  data['general_correction'] *
+                  data['mountain_coefficient'] *
+                  data['exploitation_coefficient'] *
+                  data['traffic_intensity_coefficient'] *
+                  data['bridge_coefficient'] *
+                  data['lighting_coefficient'] *
+                  data['recent_repair_coefficient'])
+    return total_cost
 
-print("H_M^j values: ", HM_j_values)
-print("H_D^j values: ", HD_j_values)
-print("Q values: ", Q)
-print("KD4: ", KD4)
-# if __name__ == '__main__':
-#     app.run(debug=True)
+
+# Flask route для расчета бюджета для дорог государственного значения
+@app.route('/calculate/state', methods=['POST'])
+def calculate_state():
+    data = request.json
+    print(f"Received data: {data}")  # Отладочный вывод
+    total_cost = calculate_total_cost_state(data)
+    return jsonify({'total_budget_state': total_cost})
+
+
+# Flask route для расчета бюджета для дорог местного значения
+@app.route('/calculate/local', methods=['POST'])
+def calculate_local():
+    data = request.json
+    total_cost = calculate_total_cost_local(data)
+    return jsonify({'total_budget_local': total_cost})
+
+if __name__ == '__main__':
+    app.run(debug=True)

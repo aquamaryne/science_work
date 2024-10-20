@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road Budget Calculator</title>
+</head>
+<body>
+    <h1>Road Budget Calculator</h1>
+
+    <label for="category">Select Road Category:</label>
+    <select id="category">
+        <option value="I">Category I</option>
+        <option value="II">Category II</option>
+        <option value="III">Category III</option>
+        <option value="IV">Category IV</option>
+        <option value="V">Category V</option>
+    </select>
+
+    <label for="mountain">Mountain Coefficient:</label>
+    <select id="mountain">
+        <option value="1.0">Normal Area</option>
+        <option value="1.2">Mountain Area</option>
+        <option value="1.4">Extreme Mountain Area</option>
+    </select>
+
+    <label for="exploitation">Exploitation Coefficient:</label>
+    <select id="exploitation">
+        <option value="1.0">Normal Conditions</option>
+        <option value="1.1">Difficult Conditions</option>
+        <option value="1.3">Very Difficult Conditions</option>
+    </select>
+
+    <label for="traffic">Traffic Intensity Coefficient:</label>
+    <select id="traffic">
+        <option value="1.0">Low</option>
+        <option value="1.05">Medium</option>
+        <option value="1.1">High</option>
+    </select>
+
+    <button id="calculateBtn">Calculate Total Budget</button>
+
+    <h2>Total Budget:</h2>
+    <p id="result"></p>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
+
+
