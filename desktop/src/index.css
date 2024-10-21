@@ -1,18 +1,96 @@
-body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
+/* Загальні стилі для body */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f0;
 }
 
-label, select {
-  margin-bottom: 10px;
-  display: block;
+/* Контейнер займає весь екран */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  padding: 50px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-h1, h2 {
+/* Заголовок */
+h1 {
+  font-size: 36px;
   color: #333;
+  margin-bottom: 30px;
 }
 
-button {
-  padding: 10px 20px;
-  margin-top: 20px;
+/* Форми і селекти */
+.form-group {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 18px;
+  color: #555;
+  display: block;
+  margin-bottom: 8px;
+}
+
+select {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+select:focus {
+  border-color: #007bff;
+}
+
+/* Кнопка */
+.btn {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  background-color: #007bff;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 30px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Заголовок і результат */
+h2 {
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+p#result {
+  font-size: 24px;
+  color: #007bff;
+  text-align: center;
+  margin-top: 10px;
 }

@@ -1,50 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Road Budget Calculator</title>
-</head>
-<body>
-    <h1>Road Budget Calculator</h1>
+<html lang="uk">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Калькулятор бюджету на утримання доріг</title>
+        <link rel="stylesheet" href="index.css"> <!-- Підключення файлу стилів -->
+    </head>
+    <body>
+        <div class="container">
+            <h1>Калькулятор бюджету на утримання доріг</h1>
 
-    <label for="category">Select Road Category:</label>
-    <select id="category">
-        <option value="I">Category I</option>
-        <option value="II">Category II</option>
-        <option value="III">Category III</option>
-        <option value="IV">Category IV</option>
-        <option value="V">Category V</option>
-    </select>
+            <div class="form-group">
+                <label for="category">Категорія дороги:</label>
+                <select id="category">
+                    <option value="I">Категорія I</option>
+                    <option value="II">Категорія II</option>
+                    <option value="III">Категорія III</option>
+                    <option value="IV">Категорія IV</option>
+                    <option value="V">Категорія V</option>
+                </select>
+            </div>
 
-    <label for="mountain">Mountain Coefficient:</label>
-    <select id="mountain">
-        <option value="1.0">Normal Area</option>
-        <option value="1.2">Mountain Area</option>
-        <option value="1.4">Extreme Mountain Area</option>
-    </select>
+            <div class="form-group">
+                <label for="mountain">Гірський коефіцієнт:</label>
+                <select id="mountain">
+                    <option value="1.0">Нормальна місцевість</option>
+                    <option value="1.2">Гірська місцевість</option>
+                    <option value="1.4">Екстремальна місцевість</option>
+                </select>
+            </div>
 
-    <label for="exploitation">Exploitation Coefficient:</label>
-    <select id="exploitation">
-        <option value="1.0">Normal Conditions</option>
-        <option value="1.1">Difficult Conditions</option>
-        <option value="1.3">Very Difficult Conditions</option>
-    </select>
+            <div class="form-group">
+                <label for="exploitation">Експлуатаційний коефіцієнт:</label>
+                <select id="exploitation">
+                    <option value="1.0">Нормальні умови</option>
+                    <option value="1.1">Складні умови</option>
+                    <option value="1.3">Дуже складні умови</option>
+                </select>
+            </div>
 
-    <label for="traffic">Traffic Intensity Coefficient:</label>
-    <select id="traffic">
-        <option value="1.0">Low</option>
-        <option value="1.05">Medium</option>
-        <option value="1.1">High</option>
-    </select>
+            <div class="form-group">
+                <label for="traffic">Інтенсивність руху:</label>
+                <select id="traffic">
+                    <option value="1.0">Низька інтенсивність</option>
+                    <option value="1.05">Середня інтенсивність</option>
+                    <option value="1.1">Висока інтенсивність</option>
+                </select>
+            </div>
 
-    <button id="calculateBtn">Calculate Total Budget</button>
+            <button id="calculateBtn" class="btn">Розрахувати</button>
 
-    <h2>Total Budget:</h2>
-    <p id="result"></p>
+            <h2>Загальний бюджет:</h2>
+            <p id="result"></p>
+        </div>
 
-    <script src="renderer.js"></script>
-</body>
+        <script src="renderer.js"></script>
+    </body>
 </html>
+
 
 
