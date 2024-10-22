@@ -48,13 +48,100 @@
                 </select>
             </div>
 
-            <button id="calculateBtn" class="btn">Розрахувати</button>
+            <button id="calculateBtnState" class="btn">Розрахувати для державних доріг</button>
+            <button id="calculateBtnLocal" class="btn">Розрахувати для місцевих доріг</button>
 
             <h2>Загальний бюджет:</h2>
             <p id="result"></p>
         </div>
 
-        <script src="renderer.js"></script>
+        <script>
+            const sendRequest = (url, data) => {
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => response.json());
+            };
+
+            const base_cost_I = 360.435;  // Base cost for local roads category I
+            const base_cost_II = 604.761; // Base cost for state roads category II
+
+            // Determine base cost based on the category selected by the user
+            const getBaseCost = (category) => {
+                if (category === 'I') {
+                    return base_cost_I;  // Use base_cost_I for category I
+                } else {
+                    return base_cost_II; // Use base_cost_II for other categories
+                }
+            };
+
+            document.getElementById('calculateBtnState').addEventListener('click', () => {
+                const category = document.getElementById('category').value;
+                const mountain = parseFloat(document.getElementById('mountain').value);
+                const exploitation = parseFloat(document.getElementById('exploitation').value);
+                const traffic = parseFloat(document.getElementById('traffic').value);
+
+                // Select appropriate base cost dynamically based on the category
+                const base_cost = getBaseCost(category);  
+                const inflation_index = 1.08;  // Пример значения
+                const length_km = 150;  // Пример значения
+
+                const data = {
+                    category: category,
+                    base_cost_II: base_cost,
+                    inflation_index: inflation_index,
+                    length_km: length_km,
+                    general_correction: 1.0,
+                    mountain_coefficient: mountain,
+                    exploitation_coefficient: exploitation,
+                    traffic_intensity_coefficient: traffic,
+                    bridge_coefficient: 1.1,
+                    lighting_coefficient: 1.2,
+                    recent_repair_coefficient: 0.5
+                };
+
+                sendRequest('http://127.0.0.1:5000/calculate/state', data)
+                    .then(result => {
+                        document.getElementById('result').textContent = `Загальний бюджет для державних доріг: ${result.total_budget_state.toFixed(2)} грн`;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+
+            document.getElementById('calculateBtnLocal').addEventListener('click', () => {
+                const category = document.getElementById('category').value;
+                const mountain = parseFloat(document.getElementById('mountain').value);
+                const exploitation = parseFloat(document.getElementById('exploitation').value);
+                const traffic = parseFloat(document.getElementById('traffic').value);
+
+                // Select appropriate base cost dynamically based on the category
+                const base_cost = getBaseCost(category);
+                const inflation_index = 1.08;  // Пример значения
+                const length_km = 150;  // Пример значения
+
+                const data = {
+                    category: category,
+                    base_cost_II: base_cost,
+                    inflation_index: inflation_index,
+                    length_km: length_km,
+                    general_correction: 1.0,
+                    mountain_coefficient: mountain,
+                    exploitation_coefficient: exploitation,
+                    traffic_intensity_coefficient: traffic,
+                    bridge_coefficient: 1.1,
+                    lighting_coefficient: 1.2,
+                    recent_repair_coefficient: 0.5
+                };
+
+                sendRequest('http://127.0.0.1:5000/calculate/local', data)
+                    .then(result => {
+                        document.getElementById('result').textContent = `Загальний бюджет для місцевих доріг: ${result.total_budget_local.toFixed(2)} грн`;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        </script>
     </body>
 </html>
 
